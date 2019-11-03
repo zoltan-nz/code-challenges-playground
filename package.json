@@ -1,0 +1,46 @@
+{
+  "name": "discount-calculator",
+  "version": "0.0.1",
+  "bin": {
+    "discount-calculator": "./dist/bin/run.js"
+  },
+  "main": "./dist/bin/run.js",
+  "author": "Zoltan",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12",
+    "npm": ">=6",
+    "yarn": ">=1.19"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.11",
+    "del-cli": "^3.0.0",
+    "jest": "^24.9.0",
+    "ndb": "^1.1.5",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.2",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.7.2"
+  },
+  "scripts": {
+    "clean": "tsc -b . --clean && del ./dist ./.cache ./coverage ./.rpt2_cache",
+    "build": "tsc",
+    "deploy": "yarn && run-s clean test build && chmod +x $(pwd)/dist/bin/run.js && yarn global add file:$(pwd)",
+    "tslint": "tslint --project ./tsconfig.json --force --fix --format stylish",
+    "tslint:test": "tslint --project tsconfig.test.json --format codeFrame --force --fix",
+    "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,md,html}'",
+    "lint": "run-s tslint tslint:test prettier",
+    "start": "node -r ts-node/register ./src/bin/run.ts",
+    "start:debug": "ndb node -r ts-node/register --inspect-brk=5100 ./src/bin/run.ts",
+    "start:prod": "node ./dist/bin/run.js",
+    "test": "jest --detectOpenHandles --colors",
+    "test:watch": "yarn test --watch"
+  }
+}
